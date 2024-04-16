@@ -1,0 +1,66 @@
+<!-- chat.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with Server</title>
+    <link rel="stylesheet" href="static/styles.css" />
+</head>
+
+<body>
+    <div class="container">
+        <h1>HealthCare ChatBot</h1>
+        <div id="chat-box">
+            <!-- Display the initial message here -->
+            <div class="message server-message">{{ server_message }}</div>
+        </div>
+        <form id="message-form">
+            {% csrf_token %}
+            <input type="text" id="user-message" placeholder="Type your message...">
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // script.js
+        
+        $(document).ready(function () {
+            // Function to add a message to the chat box
+            function addMessage(message, sender) {
+                $('#chat-box').append('<div class="message message-' + sender + '">' + message + '</div>')
+                // Scroll to the bottom of the chat box
+                $('#chat-box').scrollTop($('#chat-box')[0].scrollHeight)
+            }
+            
+            // Form submission
+            $('#message-form').submit(function (event) {
+                event.preventDefault()
+                var csrftoken = $('[name=csrfmiddlewaretoken]').val()
+                var userMessage = $('#user-message').val()
+                addMessage(userMessage, 'user')
+                // Send user's message to the server
+                $.ajax({
+                    type: 'POST',
+                    url: '/',
+                    headers: { 'X-CSRFToken': csrftoken },
+                    data: {
+                        message: userMessage
+                    },
+                    success: function (response) {
+                        console.log(response)
+                        addMessage(response.message, 'server')
+                    },
+                    error: function (xhr, errmsg, err) {
+                        console.log(xhr.status + ': ' + xhr.responseText)
+                    }
+                })
+                // Clear input field
+                $('#user-message').val('')
+            })
+        })
+    </script>
+</body>
+</html>
