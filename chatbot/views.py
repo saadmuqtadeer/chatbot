@@ -14,8 +14,8 @@ import csv
 import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-training = pd.read_csv('C:/Users/saad/OneDrive/Desktop/CS comm/char/Data/Training.csv')
-testing= pd.read_csv('C:/Users/saad/OneDrive/Desktop/CS comm/char/Data/Testing.csv')
+training = pd.read_csv('C:/Users/saad/OneDrive/Desktop/education/CS comm/char/Data/Training.csv')
+testing= pd.read_csv('C:/Users/saad/OneDrive/Desktop/education/CS comm/char/Data/Testing.csv')
 cols= training.columns
 cols= cols[:-1]
 x = training[cols]
@@ -97,7 +97,7 @@ def check_pattern(dis_list,inp):
     
 def getDescription():
     global description_list
-    with open('C:/Users/saad/OneDrive/Desktop/CS comm/char/MasterData/symptom_Description.csv') as csv_file:
+    with open('C:/Users/saad/OneDrive/Desktop/education/CS comm/char/MasterData/symptom_Description.csv') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         line_count = 0
         for row in csv_reader:
@@ -106,7 +106,7 @@ def getDescription():
 
 def getSeverityDict():
     global severityDictionary
-    with open('C:/Users/saad/OneDrive/Desktop/CS comm/char/MasterData/symptom_severity.csv') as csv_file:
+    with open('C:/Users/saad/OneDrive/Desktop/education/CS comm/char/MasterData/symptom_severity.csv') as csv_file:
 
         csv_reader = csv.reader(csv_file, delimiter=',')
         line_count = 0
@@ -120,7 +120,7 @@ def getSeverityDict():
 
 def getprecautionDict():
     global precautionDictionary
-    with open('C:/Users/saad/OneDrive/Desktop/CS comm/char/MasterData/symptom_precaution.csv') as csv_file:
+    with open('C:/Users/saad/OneDrive/Desktop/education/CS comm/char/MasterData/symptom_precaution.csv') as csv_file:
 
         csv_reader = csv.reader(csv_file, delimiter=',')
         line_count = 0
@@ -191,7 +191,7 @@ def calc_condition(exp,days):
         return "It might not be that bad but you should take precautions."
         
 def sec_predict(symptoms_exp):
-    df = pd.read_csv('C:/Users/saad/OneDrive/Desktop/CS comm/char/Data/Training.csv')
+    df = pd.read_csv('C:/Users/saad/OneDrive/Desktop/education/CS comm/char/Data/Training.csv')
     X = df.iloc[:, :-1]
     y = df['prognosis']
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=20)
